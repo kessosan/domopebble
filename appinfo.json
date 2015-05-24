@@ -1,0 +1,62 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "souchet@wanadoo.fr",
+    "longName": "Domopebble",
+    "projectType": "pebblejs",
+    "resources": {
+        "media": [
+            {
+                "file": "images/menu_icon.png",
+                "menuIcon": true,
+                "name": "IMAGE_MENU_ICON",
+                "type": "png"
+            },
+            {
+                "file": "images/logo_splash.png",
+                "name": "IMAGE_LOGO_SPLASH",
+                "type": "png"
+            },
+            {
+                "file": "images/tile_splash.png",
+                "name": "IMAGE_TILE_SPLASH",
+                "type": "png"
+            },
+            {
+                "file": "fonts/UbuntuMono-Regular.ttf",
+                "name": "MONO_FONT_14",
+                "type": "font"
+            },
+            {
+                "file": "images/ampoule_on_p.png",
+                "name": "IMAGES_AMPOULE_ON_P_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/ampoule_off_p.png",
+                "name": "IMAGES_AMPOULE_OFF_P_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/logo_domoticz_p.png",
+                "name": "IMAGES_LOGO_DOMOTICZ_P_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/portail_p.png",
+                "name": "IMAGES_PORTAIL_P_PNG",
+                "type": "png"
+            }
+        ]
+    },
+    "sdkVersion": "3",
+    "shortName": "Domopebble",
+    "uuid": "1fdf2702-fe70-4548-b8c3-3a220745c768",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
