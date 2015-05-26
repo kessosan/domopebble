@@ -30,6 +30,16 @@
                 "type": "font"
             },
             {
+                "file": "images/eclair_p.png",
+                "name": "IMAGES_ECLAIR_P_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/compteur_p.png",
+                "name": "IMAGES_COMPTEUR_P_PNG",
+                "type": "png"
+            },
+            {
                 "file": "images/ampoule_on_p.png",
                 "name": "IMAGES_AMPOULE_ON_P_PNG",
                 "type": "png"
