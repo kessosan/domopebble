@@ -30,6 +30,16 @@
                 "type": "font"
             },
             {
+                "file": "images/capteur_p.png",
+                "name": "IMAGES_CAPTEUR_P_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/thermometre_p.png",
+                "name": "IMAGES_THERMOMETRE_P_PNG",
+                "type": "png"
+            },
+            {
                 "file": "images/eclair_p.png",
                 "name": "IMAGES_ECLAIR_P_PNG",
                 "type": "png"

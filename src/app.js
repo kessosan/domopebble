@@ -10,9 +10,90 @@ var ajax = require('ajax');
 var baseURL = 'http://domoticz.kessosan.info/json.htm?';
 var Vibe = require('ui/vibe');
 
+
+/*
+*  fetch power details
+*/
+var parsePowerFeed = function(data) {
+  var items = [];
+
+  // Add to menu items array
+  items.push({
+    title:"actuel",
+    subtitle:data.result[0].Usage
+  });
+
+  items.push({
+    title:"aujourd'hui",
+    subtitle:data.result[0].CounterToday
+  });
+
+  // Finally return whole array
+  return items;
+};
+
+/*
+*  fetch temperature details
+*/
+var parseTemperatureFeed = function(data) {
+  var items = [];
+
+  // Add to menu items array
+  items.push({
+    title:"cuisine",
+    subtitle:data.result[1].Data
+  });
+
+  items.push({
+    title:"mezzanine",
+    subtitle:data.result[2].Data
+  });
+  
+  items.push({
+    title:"salle à manger",
+    subtitle:data.result[3].Data
+  });
+
+  // Finally return whole array
+  return items;
+};
+
 var main = new UI.Card({
   title: 'Domopebble',
-  icon: 'images/logo_domoticz_p.png',
+  //icon: 'images/logo_domoticz_p.png',
+  //subtitle: 'Bienvenue sur Domopebble',
+  body: 'appuyez sur select'
+});
+
+/*
+*  fetch sensors details
+*/
+var parseCapteursFeed = function(data) {
+  var items = [];
+
+  // Add to menu items array
+  items.push({
+    title:"porte entrée",
+    subtitle:data.result[4].Status
+  });
+
+  items.push({
+    title:"porte garage",
+    subtitle:data.result[5].Status
+  });
+  
+  items.push({
+    title:"portail",
+    subtitle:data.result[3].Status
+  });
+
+  // Finally return whole array
+  return items;
+};
+
+var main = new UI.Card({
+  title: 'Domopebble',
+  //icon: 'images/logo_domoticz_p.png',
   //subtitle: 'Bienvenue sur Domopebble',
   body: 'appuyez sur select'
 });
@@ -41,6 +122,12 @@ main.on('click', 'select', function(e) {
       }, {
         title: 'conso élec.',
         icon: 'images/eclair_p.png'
+      }, {
+        title: 'température',
+        icon: 'images/thermometre_p.png'
+      },{
+        title: 'capteurs',
+        icon: 'images/capteur_p.png'
       }]
     }]
   });
@@ -103,6 +190,18 @@ main.on('click', 'select', function(e) {
       action = 'consommation '+device;
     }
     
+    if(e.itemIndex===6) {
+      URL  = baseURL + 'type=devices&filter=temp&used=true&order=Name';
+      device = "température"; 
+      action = 'température '+device;
+    }
+    
+    if(e.itemIndex===7) {
+      URL  = baseURL + 'type=devices&filter=light&used=true&order=Name&plan=0';
+      device = "capteurs"; 
+      action = 'capteurs '+device;
+    }
+    
     waitingWindow.add(text);
     waitingWindow.show();
     
@@ -116,21 +215,84 @@ main.on('click', 'select', function(e) {
         // Success!
         var result = data.status;
         
-        if(data.result[0].Type=='Energy') {
-          result = data.result[0].Usage;
+        if(device=='électricité'/*data.result[0].Type=='Energy'*/) {
+                 
+          // Create an array of power menu items
+          var menuPowerItems = parsePowerFeed(data, 10);
+          
+          // Check the items are extracted OK
+          for(var i = 0; i < menuPowerItems.length; i++) {
+            console.log(menuPowerItems[i].title + ' | ' + menuPowerItems[i].subtitle);
+          }
+          
+          var powerDetail = new UI.Menu({
+            sections: [{
+              title: 'Consomamtion électrique',
+              items: menuPowerItems
+            }]
+          });
+
+          // Show the Menu, hide the splash
+          powerDetail.show();
+          waitingWindow.hide();
+          
+        } else if(device=='température') {
+         
+          // Create an array of temperature menu items
+          var menuTemperatureItems = parseTemperatureFeed(data, 10);
+          
+          // Check the items are extracted OK
+          for(var j = 0; j < menuTemperatureItems.length; j++) {
+            console.log(menuTemperatureItems[j].title + ' | ' + menuTemperatureItems[j].subtitle);
+          }
+          
+          var temperatureDetail = new UI.Menu({
+            sections: [{
+              title: 'Température',
+              items: menuTemperatureItems
+            }]
+          });
+
+          // Show the Menu, hide the splash
+          temperatureDetail.show();
+          waitingWindow.hide();
+        
+        } else if(device=='capteurs') {
+         
+          // Create an array of temperature menu items
+          var menuCapteursItems = parseCapteursFeed(data, 10);
+          
+          // Check the items are extracted OK
+          for(var k = 0; k < menuCapteursItems.length; k++) {
+            console.log(menuCapteursItems[k].title + ' | ' + menuCapteursItems[k].subtitle);
+          }
+          
+          var capteursDetail = new UI.Menu({
+            sections: [{
+              title: 'Capteurs',
+              items: menuCapteursItems
+            }]
+          });
+
+          // Show the Menu, hide the splash
+          capteursDetail.show();
+          waitingWindow.hide();
+        
         } else {
           result = data.status;
+          
+          // Add to splashWindow and show 
+          //waitingWindow.hide();
+          main.subtitle(action);
+          main.body(result);
+          main.show();
+          
+          Vibe.vibrate('short');
+          waitingWindow.hide();
         }
         
         console.log(action + ' ' +data.status +" !");
         console.log(JSON.stringify(data));
-        
-        // Add to splashWindow and show        
-        main.subtitle(action);
-        main.body(result);
-        main.show();
-        
-        Vibe.vibrate('short');        
         
       },
       function(error,data) {
@@ -144,15 +306,23 @@ main.on('click', 'select', function(e) {
         main.show();
         
         Vibe.vibrate('long');  
+        waitingWindow.hide();
       }
     );
     
     //console.log('Selected item #' + e.itemIndex + ' of section #' + e.sectionIndex);
     //console.log('The item is titled "' + e.item.title + '"');
-    
+    //waitingWindow.hide();
   });
 
 });
+
+
+
+
+
+
+
 
 /*function parseJSONResponse(data){
   var result = null;
