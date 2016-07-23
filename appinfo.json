@@ -10,19 +10,18 @@
         "media": [
             {
                 "file": "images/menu_icon.png",
-                "menuIcon": true,
                 "name": "IMAGE_MENU_ICON",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/logo_splash.png",
                 "name": "IMAGE_LOGO_SPLASH",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/tile_splash.png",
                 "name": "IMAGE_TILE_SPLASH",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "fonts/UbuntuMono-Regular.ttf",
@@ -30,53 +29,64 @@
                 "type": "font"
             },
             {
+                "file": "images/goutte-eau_p.png",
+                "name": "IMAGES_GOUTTE_EAU_P_PNG",
+                "type": "bitmap"
+            },
+            {
                 "file": "images/capteur_p.png",
                 "name": "IMAGES_CAPTEUR_P_PNG",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/thermometre_p.png",
                 "name": "IMAGES_THERMOMETRE_P_PNG",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/eclair_p.png",
                 "name": "IMAGES_ECLAIR_P_PNG",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/compteur_p.png",
                 "name": "IMAGES_COMPTEUR_P_PNG",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/ampoule_on_p.png",
                 "name": "IMAGES_AMPOULE_ON_P_PNG",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/ampoule_off_p.png",
                 "name": "IMAGES_AMPOULE_OFF_P_PNG",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/logo_domoticz_p.png",
+                "menuIcon": true,
                 "name": "IMAGES_LOGO_DOMOTICZ_P_PNG",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/portail_p.png",
                 "name": "IMAGES_PORTAIL_P_PNG",
-                "type": "png"
+                "type": "bitmap"
             }
         ]
     },
     "sdkVersion": "3",
     "shortName": "Domopebble",
+    "targetPlatforms": [
+        "aplite",
+        "basalt"
+    ],
     "uuid": "1fdf2702-fe70-4548-b8c3-3a220745c768",
     "versionCode": 1,
     "versionLabel": "1.0",
     "watchapp": {
+        "hiddenApp": false,
         "watchface": false
     }
 }

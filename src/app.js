@@ -60,7 +60,7 @@ var parseTemperatureFeed = function(data) {
 
 var main = new UI.Card({
   title: 'Domopebble',
-  //icon: 'images/logo_domoticz_p.png',
+  icon: 'images/logo_domoticz_p.png',
   //subtitle: 'Bienvenue sur Domopebble',
   body: 'appuyez sur select'
 });
@@ -117,6 +117,9 @@ main.on('click', 'select', function(e) {
         title: 'prise 2 OFF',
         icon: 'images/ampoule_off_p.png'
       }, {
+        title: 'surpresseur OFF',
+        icon: 'images/goutte-eau_p.png'
+      },{
         title: 'portail ON/OFF',
         icon: 'images/portail_p.png'
       }, {
@@ -179,24 +182,30 @@ main.on('click', 'select', function(e) {
     }
     
     if(e.itemIndex===4) {
+      URL  = baseURL + 'type=command&param=switchlight&idx=7&switchcmd=Off&level=0&passcode=';
+      device = "surpresseur"; 
+      action = device+' OFF';
+    }
+    
+    if(e.itemIndex===5) {
       URL  = baseURL + 'type=command&param=switchlight&idx=23&switchcmd=On&level=0&passcode=';
       device = "portail"; 
       action = 'ouv./ferm. '+device;
     }
     
-    if(e.itemIndex===5) {
+    if(e.itemIndex===6) {
       URL  = baseURL + 'type=devices&filter=utility&used=true&order=Name&plan=0';
       device = "électricité"; 
       action = 'consommation '+device;
     }
     
-    if(e.itemIndex===6) {
+    if(e.itemIndex===7) {
       URL  = baseURL + 'type=devices&filter=temp&used=true&order=Name';
       device = "température"; 
       action = 'température '+device;
     }
     
-    if(e.itemIndex===7) {
+    if(e.itemIndex===8) {
       URL  = baseURL + 'type=devices&filter=light&used=true&order=Name&plan=0';
       device = "capteurs"; 
       action = 'capteurs '+device;
@@ -209,7 +218,11 @@ main.on('click', 'select', function(e) {
     ajax(
       {
         url: URL,
-        type: 'json'
+        type: 'json',
+        headers: {
+          Cookie : 'SID=26601a08260b5a4f788c616e6eb027fe_MDlhOTVhM2QtNmRkMi00MGZkLWE0YjAtNzRiNDY2NDZhZWJi.1495662702',
+          Connection: 'keep-alive'
+        }
       },
       function(data) {
         // Success!
@@ -227,7 +240,7 @@ main.on('click', 'select', function(e) {
           
           var powerDetail = new UI.Menu({
             sections: [{
-              title: 'Consomamtion électrique',
+              title: 'Consommation électrique',
               items: menuPowerItems
             }]
           });
@@ -241,7 +254,7 @@ main.on('click', 'select', function(e) {
           // Create an array of temperature menu items
           var menuTemperatureItems = parseTemperatureFeed(data, 10);
           
-          // Check the items are extracted OK
+          // Check the items are well extracted
           for(var j = 0; j < menuTemperatureItems.length; j++) {
             console.log(menuTemperatureItems[j].title + ' | ' + menuTemperatureItems[j].subtitle);
           }
